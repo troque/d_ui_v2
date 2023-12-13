@@ -1,0 +1,84 @@
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+.modal-content {
+  padding-bottom: 20px;
+}
+
+.no-suggestions {
+  color: #999;
+  padding: 0.5rem;
+}
+
+.suggestions {
+  border: 1px solid #999;
+  border-top-width: 0;
+  list-style: none;
+  margin-top: 0;
+  max-height: 143px;
+  overflow-y: auto;
+  padding-left: 0;
+}
+
+.suggestions li {
+  padding: 0.5rem;
+}
+
+.suggestion-active,
+.suggestions li:hover {
+  background-color: #328DBE;
+  color: white;
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.suggestions li:not(:last-of-type) {
+  border-bottom: 1px solid #999;
+}
+
+.eUeqdG{
+  overflow: visible !important;
+  white-space: normal !important;
+}
+.bMgaAx div:first-child {
+  white-space: normal !important;
+}
+.dFsTSm{
+  overflow: visible !important;
+  white-space: normal !important;
+}
+.dBbhDz div:first-child {
+  white-space: normal !important;
+}
+#cell-7-undefined > div{
+  width: 100%;
+}
+
+#contenedorFechaSemaforo > div > div{
+  position: absolute;
+  top: 40px;
+}
+
+#cell-8-undefined > div{
+  width: 100%;
+}
+.bMgaAx div:first-child,.gelpCx,.dBbhDz div:first-child,.embYUS{
+  overflow: visible !important;
+  overflow-x: auto !important;
+}
+
+.linkWithoutDecoration {
+  color: inherit;
+  text-decoration: none;
+}

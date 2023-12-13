@@ -1,0 +1,52 @@
+import axios from 'axios'
+import { getToken, getUser, removeUserSession, setUserSession } from '../../../components/Utils/Common';
+//const baseUrl = 'http://127.0.0.1:8000/api/v1/'
+const baseUrl = process.env.REACT_APP_API_URL;
+
+
+const headers = {
+    'Content-Type': 'application/vnd.api+json',
+    'Accept': 'application/vnd.api+json'
+}
+
+
+
+
+async function addInteresadoEntidadPermitida(data) {
+
+    const url = baseUrl + "mas-entidad-permitida";
+    const token = getToken();
+    headers['Authorization'] = `Bearer ${token}`;
+
+    return await axios.post(url, data, {
+        headers: headers
+    })
+        .then(response => {
+            return response.data;
+        })
+        .catch(error => {
+            // console.log(error);
+            return { estado: false, error: error }
+        });
+}
+
+async function updateInteresadoEntidadPermitida(data, id) {
+
+    const url = baseUrl + "mas-entidad-permitida/ " + id;
+    const token = getToken();
+    headers['Authorization'] = `Bearer ${token}`;
+
+    return await axios.put(url, data, {
+        headers: headers
+    })
+        .then(response => {
+            return response.data;
+        })
+        .catch(error => {
+            // console.log(error);
+            return { estado: false, error: error }
+        });
+}
+
+
+export default { addInteresadoEntidadPermitida, updateInteresadoEntidadPermitida }

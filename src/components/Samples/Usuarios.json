@@ -1,0 +1,22 @@
+{
+    "usuarios": [
+        {
+            "nombre": "Pepito",
+            "apellido": "Lopez",
+            "registrado": "11-29-2021",
+            "cargo": "Programador"
+        },
+        {
+            "nombre": "Diana",
+            "apellido": "Mendez",
+            "registrado": "02-03-2021",
+            "cargo": "QA"
+        },
+        {
+            "nombre": "Ruth",
+            "apellido": "Velez",
+            "registrado": "02-10-2019",
+            "cargo": "Analista"
+        }
+    ]
+}

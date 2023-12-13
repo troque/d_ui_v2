@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#000000" />
+  <meta name="description" content="Web site created using create-react-app" />
+  <link href="/assets/images/favicon.ico" rel="shortcut icon" type="image/vnd.microsoft.icon">
+  <!--
+      manifest.json provides metadata used when your web app is installed on a
+      user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
+    -->
+  <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+  <!--
+      Notice the use of %PUBLIC_URL% in the tags above.
+      It will be replaced with the URL of the `public` folder during the build.
+      Only files inside the `public` folder can be referenced from the HTML.
+
+      Unlike "/favicon.ico" or "favicon.ico", "%PUBLIC_URL%/favicon.ico" will
+      work correctly both with client-side routing and a non-root public URL.
+      Learn how to configure a non-root public URL by running `npm run build`.
+    -->
+
+  <!--Agregados para el proyecto-->
+  <!-- Icons -->
+  <!-- The following icons can be replaced with your own, they are used by desktop and mobile browsers -->
+  <link rel="shortcut icon" href="%PUBLIC_URL%/assets/images/favicon.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="%PUBLIC_URL%/assets/images/favicon.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="%PUBLIC_URL%/assets/images/favicon.png">
+  <!-- END Icons -->
+  <!-- Stylesheets -->
+  <!-- Page JS Plugins CSS -->
+  <link rel="stylesheet" href="%PUBLIC_URL%/assets/js/plugins/sweetalert2/sweetalert2.css">
+
+  <!-- Fonts and Dashmix framework -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito+Sans:300,400,400i,600,700">
+  <link rel="stylesheet" id="css-main" href="%PUBLIC_URL%/assets/css/dashmix.css">
+
+  <link rel="stylesheet" id="css-main" href="%PUBLIC_URL%/assets/css/main.css">
+
+  <title>Sistema Disciplinarios - Personería de Bogotá</title>
+</head>
+
+<body>
+  <noscript>You need to enable JavaScript to run this app.</noscript>
+  <div id="root"></div>
+  <!--
+      This HTML file is a template.
+      If you open it directly in the browser, you will see an empty page.
+
+      You can add webfonts, meta tags, or analytics to this file.
+      The build step will place the bundled scripts into the <body> tag.
+
+      To begin the development, run `npm start` or `yarn start`.
+      To create a production bundle, use `npm run build` or `yarn build`.
+    -->
+
+  <script src="%PUBLIC_URL%/assets/js/dashmix.core.min.js"></script>
+  <script src="%PUBLIC_URL%/assets/js/dashmix.app.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.min.js"
+    integrity="sha512-YcsIPGdhPK4P/uRW6/sruonlYj+Q7UHWeKfTAkBW+g83NKM+jMJFJ4iAPfSnVp7BKD4dKMHmVSvICUbE/V1sSw=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+  <script type="text/javascript">
+    function showModal(info) {
+      switch (info) {
+        case 0:
+          $('#modal-block-popout-exito').modal('show');
+          break;
+        case 1:
+          $('#modal-block-popout-error').modal('show');
+          break;
+        case 2:
+          $('#modal-block-popout-exito').modal('show');
+          break;
+        case 3:
+          $('#modal-block-popout-exito-custom').modal('show');
+          break;
+        case 4:
+          $('#modal-block-popout-exito-consulta').modal('show');
+          break;
+        case 5:
+          $('#modal-block-popout-custom').modal('show');
+          break;
+        case 6:
+          $('#modal-block-popout-exito-texto-personalizado').modal('show');
+          break;
+        case 7:
+          $('#modal-block-popout-exito-cierre-etapa').modal('show');
+          break;
+        case 8:
+          $('#modal-block-popout-historico-versiones-gestor-respuesta').modal('show');
+          break;
+        case 9:
+          $('#modal-block-popout-confirmar-accion').modal('show');
+          break;
+        case 10:
+          $('#modal-block-popout-actuaciones').modal('show');
+          break;
+        default:
+          $('#modal-block-popout-exito').modal('show');
+          break;
+      }
+    }
+    function showSpinner(status) {
+      switch (status) {
+        case true:
+          $('#modal-block-spinner').modal('show');
+          break;
+        case false:
+          $('#modal-block-spinner').modal('hide');
+          break;
+        default:
+          $('#modal-block-spinner').modal('toggle');
+          break;
+      }
+    }
+    function showModalDatosInteresado() {
+      $('#modal-block-popout-datos-interesado').modal('show');
+    }
+
+    function createPdf(elementId, filename) {
+
+      var element = document.getElementById(`${elementId}`);
+      var d = new Date,
+        dformat = [(d.getMonth() + 1).padLeft(),
+        d.getDate().padLeft(),
+        d.getFullYear()].join('/') + ' ' +
+          [d.getHours().padLeft(),
+          d.getMinutes().padLeft(),
+          d.getSeconds().padLeft()].join(':');
+      var nombre = d + "_" + filename;
+
+      var opt = {
+        margin: 0,
+        filename: filename + '.pdf',
+        image: { type: 'jpeg', quality: 0.98 },
+        html2canvas: {
+          scale: 1,
+          ignoreElements: function (elem) {
+            if (elem.classList.contains('d-print-none')) return true;
+            return false;
+          }
+        },
+        jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
+      };
+
+      var printDate = "<p class='print-date font-w300'>Fecha de generación: " + dformat + "</p>";
+
+      // $(element).prepend(printDate);
+      $(element).append(printDate);
+
+      html2pdf().set(opt).from(element).save();
+
+      setTimeout(function () {
+        $('.print-date').remove();
+      }, 3000);
+
+    }
+
+    Number.prototype.padLeft = function (base, chr) {
+      var len = (String(base || 10).length - String(this).length) + 1;
+      return len > 0 ? new Array(len).join(chr || '0') + this : this;
+    }
+
+    function showModalDetalleAntecendente() {
+      $('#modal-block-popout-datos-interesado').modal('show');
+    }
+
+    function showModalRemitirProceso() {
+      $('#modal-block-popout-remitir-proceso').modal('show');
+    }
+
+    function hideModalEntidadInvestigadoQuejaInterna() {
+      $('#modalFuncionario').modal('hide');
+    }
+
+    function hideModalRemitirProceso() {
+      $('#modal-block-popout-remitir-proceso').modal('hide');
+    }
+
+    function showModalCoincidenciasUsuario() {
+      $('#modal-block-popout-coincidencias-usuario').modal('show');
+    }
+
+    function showModalCalendar() {
+      $('#modal-editar-fecha').modal('show');
+    }
+
+    function showModalListaVersionesGestorRespuesta() {
+      $('#modal-block-popout-versiones-gestor-respuesta').modal('show');
+    }
+
+    function showModalConfirmacionAdministradorGestorRespuesta() {
+      $('#modal-block-popout-confirmacion-administracion-gestor-respuesta').modal('show');
+    }
+
+    function showModalAgregarFuncionarioGestorRespuesta(mostrar) {
+      switch (mostrar) {
+        case true:
+          $('#modal-block-popout-agregar-funcionario-gestor-respuesta').modal('show');
+          break;
+        default:
+          $('#modal-block-popout-agregar-funcionario-gestor-respuesta').modal('hide');
+          break;
+      }
+    }
+
+    function showModalListaVersionesGestorRespuestaAdminstracion() {
+      $('#modal-block-popout-versiones-gestor-respuesta-administracion').modal('show');
+    }
+
+    function showModalConsultarRegistroSeguimiento() {
+      $('#modal-consultar-registro-seguimiento').modal('show');
+    }
+
+    // Metodo encargado de asignar y cerrar el modal de la direccion
+    function asignarDireccion() {
+
+      // Se cierra el modal
+      $('#modal-direccion').modal('hide');
+    }
+
+    function showModalAgregarEvaluacionFase(mostrar) {
+      switch (mostrar) {
+        case true:
+          $('#modal-block-popout-agregar-evaluacion-fase').modal('show');
+          break;
+        default:
+          $('#modal-block-popout-agregar-evaluacion-fase').modal('hide');
+          break;
+      }
+    }
+
+    function showModalAgregarEvaluacionSoloFase(mostrar) {
+      switch (mostrar) {
+        case true:
+          $('#modal-block-popout-agregar-evaluacion-solo-fase').modal('show');
+          break;
+        default:
+          $('#modal-block-popout-agregar-evaluacion-solo-fase').modal('hide');
+          break;
+      }
+    }
+
+    function showModalEtapaConfirmacionActuaciones(mostrar) {
+      switch (mostrar) {
+        case true:
+          $('#modal-block-popout-cambio-etapa-actuaciones').modal('show');
+          break;
+        default:
+          $('#modal-block-popout-cambio-etapa-actuaciones').modal('hide');
+          break;
+      }
+    }
+
+    function showModalInformacionMisPendientes(mostrar) {
+      switch (mostrar) {
+        case true:
+          $('#modal-block-popout-informacion-mis-pendientes').modal('show');
+          break;
+        default:
+          $('#modal-block-popout-informacion-mis-pendientes').modal('hide');
+          break;
+      }
+    }
+
+    function showModalVigenciaConfirmacionProcesoDisciplinario(mostrar) {
+      switch (mostrar) {
+        case true:
+          $('#modal-block-popout-cambio-vigencia-proceso-disciplinario').modal('show');
+          break;
+        default:
+          $('#modal-block-popout-cambio-vigencia-proceso-disciplinario').modal('hide');
+          break;
+      }
+    }
+
+
+    function showModalDetalleListaAntecendente(mostrar) {
+      switch (mostrar) {
+        case true:
+          $('#modal-consultar-detalle').modal('show');
+          break;
+        default:
+          $('#modal-consultar-detalle').modal('hide');
+          break;
+      }
+    }
+
+    function showModalAsociarCasos(mostrar) {
+      switch (mostrar) {
+        case true:
+          $('#modal-block-popout-asociar-casos').modal('show');
+          break;
+        default:
+          $('#modal-block-popout-asociar-casos').modal('hide');
+          break;
+      }
+    }
+
+    function showModalAyudaListaSemaforos(mostrar) {
+      switch (mostrar) {
+        case true:
+          $('#modal-block-lista-semaforo-ayuda').modal('show');
+          break;
+        default:
+          $('#modal-block-lista-semaforo-ayuda').modal('hide');
+          break;
+      }
+    }
+
+    function showConfirmacionAprobacionActuacion(mostrar) {
+      switch (mostrar) {
+        case true:
+          $('#modal-block-popout-confirmacion-aprobacion-actuacion').modal('show');
+          break;
+        default:
+          $('#modal-block-popout-confirmacion-aprobacion-actuacion').modal('hide');
+          break;
+      }
+    }
+
+    function showConfirmacionAnulacionActuacion(mostrar) {
+      switch (mostrar) {
+        case true:
+          $('#modal-block-popout-confirmacion-anulacion-actuacion').modal('show');
+          break;
+        default:
+          $('#modal-block-popout-confirmacion-anulacion-actuacion').modal('hide');
+          break;
+      }
+    }
+
+    function showConfirmacionAprovacionRechazoAnulacionActuacion(mostrar) {
+      switch (mostrar) {
+        case true:
+          $('#modal-block-popout-confirmacion-aprobacion-rechazo-anulacion-actuacion').modal('show');
+          break;
+        default:
+          $('#modal-block-popout-confirmacion-aprobacion-rechazo-anulacion-actuacion').modal('hide');
+          break;
+      }
+    }
+
+    function showConfirmacionHistorialListaActuacionesInactivas(mostrar) {
+      switch (mostrar) {
+        case true:
+          $('#modal-block-popout-historial-lista-actuaciones-inactivas').modal('show');
+          break;
+        default:
+          $('#modal-block-popout-historial-lista-actuaciones-inactivas').modal('hide');
+          break;
+      }
+    }
+
+    function showModalFechaRegistroConfirmacionActuaciones(mostrar) {
+      switch (mostrar) {
+        case true:
+          $('#modal-block-popout-cambio-fecha-registro-actuaciones').modal('show');
+          break;
+        default:
+          $('#modal-block-popout-cambio-fecha-registro-actuaciones').modal('hide');
+          break;
+      }
+    }
+  </script>
+
+</body>
+
+</html>
